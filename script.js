@@ -441,8 +441,7 @@ document.querySelectorAll(".nav").forEach(link => {
 // Fetch scholarships from the Node.js + Express backend
 async function loadScholarshipsFromBackend() {
   try {
-    const response = await fetch(
-      "http://localhost:5000/api/scholarships"
+    const response = await fetch("/api/scholarships")
     );
 
     if (!response.ok) {
