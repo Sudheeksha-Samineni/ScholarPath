@@ -1,3 +1,4 @@
+
 let scholarships = [
   {
     id: 1,
@@ -438,81 +439,9 @@ document.querySelectorAll(".nav").forEach(link => {
   });
 });
 
-// Fetch scholarships from the Node.js + Express backend
-async function loadScholarshipsFromBackend() {
-  try {
-    const response = await fetch("/api/scholarships")
-    );
-
-    if (!response.ok) {
-      throw new Error("Backend returned an error.");
-    }
-
-    const data = await response.json();
-
-    if (!Array.isArray(data)) {
-      throw new Error("Scholarship data format is invalid.");
-    }
-
-    scholarships = data.map((item, index) => ({
-      id: Number(item.id) || index + 1,
-      name: item.name || "Scholarship",
-      provider: item.provider || "ScholarPath",
-      amount: item.amount || "Varies",
-
-      level: Array.isArray(item.level)
-        ? item.level
-        : [item.education || "UG"],
-
-      categories: Array.isArray(item.categories)
-        ? item.categories
-        : (
-            item.category && item.category !== "All"
-              ? [item.category]
-              : ["General", "OBC", "SC", "ST", "EWS", "Minority"]
-          ),
-
-      states: Array.isArray(item.states)
-        ? item.states
-        : ["All India"],
-
-      maxIncome: Number(
-        item.maxIncome ?? item.incomeLimit ?? 0
-      ),
-
-      minCGPA: Number(item.minCGPA ?? 0),
-      icon: item.icon || "🎓",
-
-      description:
-        item.description ||
-        item.note ||
-        "Check the official portal for details.",
-
-      deadline:
-        item.deadline ||
-        "Check the official portal for the latest deadline.",
-
-      url: item.url || "https://scholarships.gov.in/"
-    }));
-
-    showToast("Scholarships loaded from backend!");
-  } catch (error) {
-    console.error(
-      "Could not load scholarships from backend:",
-      error
-    );
-
-    showToast(
-      "Backend unavailable. Showing demo scholarships."
-    );
-
-    // Original sample scholarships remain as fallback.
-  }
-}
-
-async function initializeScholarPath() {
+// Initialize frontend-only ScholarPath
+function initializeScholarPath() {
   loadProfile();
-  await loadScholarshipsFromBackend();
   renderAll();
 }
 
