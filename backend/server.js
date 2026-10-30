@@ -59,8 +59,4 @@ app.post("/api/eligible", (req, res) => {
   res.json(eligible);
 });
 
-const PORT = process.env.PORT || 5000;
-
-app.listen(PORT, () => {
-  console.log(`ScholarPath server running on port ${PORT}`);
-});
+module.exports = app;
